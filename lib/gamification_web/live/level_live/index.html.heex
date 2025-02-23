@@ -1,0 +1,43 @@
+<.header>
+  Listing Levels
+  <:actions>
+    <.link patch={~p"/levels/new"}>
+      <.button>New Level</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="levels"
+  rows={@streams.levels}
+  row_click={fn {_id, level} -> JS.navigate(~p"/levels/#{level}") end}
+>
+  <:col :let={{_id, level}} label="Name">{level.name}</:col>
+  <:col :let={{_id, level}} label="Description">{level.description}</:col>
+  <:col :let={{_id, level}} label="Points required">{level.points_required}</:col>
+  <:action :let={{_id, level}}>
+    <div class="sr-only">
+      <.link navigate={~p"/levels/#{level}"}>Show</.link>
+    </div>
+    <.link patch={~p"/levels/#{level}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, level}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: level.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="level-modal" show on_cancel={JS.patch(~p"/levels")}>
+  <.live_component
+    module={GamificationWeb.LevelLive.FormComponent}
+    id={@level.id || :new}
+    title={@page_title}
+    action={@live_action}
+    level={@level}
+    patch={~p"/levels"}
+  />
+</.modal>

@@ -1,0 +1,41 @@
+<.header>
+  Listing Player achievements
+  <:actions>
+    <.link patch={~p"/player_achievements/new"}>
+      <.button>New Player achievement</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="player_achievements"
+  rows={@streams.player_achievements}
+  row_click={fn {_id, player_achievement} -> JS.navigate(~p"/player_achievements/#{player_achievement}") end}
+>
+  <:col :let={{_id, player_achievement}} label="Achieved at">{player_achievement.achieved_at}</:col>
+  <:action :let={{_id, player_achievement}}>
+    <div class="sr-only">
+      <.link navigate={~p"/player_achievements/#{player_achievement}"}>Show</.link>
+    </div>
+    <.link patch={~p"/player_achievements/#{player_achievement}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, player_achievement}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: player_achievement.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="player_achievement-modal" show on_cancel={JS.patch(~p"/player_achievements")}>
+  <.live_component
+    module={GamificationWeb.PlayerAchievementLive.FormComponent}
+    id={@player_achievement.id || :new}
+    title={@page_title}
+    action={@live_action}
+    player_achievement={@player_achievement}
+    patch={~p"/player_achievements"}
+  />
+</.modal>

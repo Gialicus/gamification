@@ -1,0 +1,26 @@
+<.header>
+  Player level {@player_level.id}
+  <:subtitle>This is a player_level record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/players_levels/#{@player_level}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit player_level</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Unlocked at">{@player_level.unlocked_at}</:item>
+</.list>
+
+<.back navigate={~p"/players_levels"}>Back to players_levels</.back>
+
+<.modal :if={@live_action == :edit} id="player_level-modal" show on_cancel={JS.patch(~p"/players_levels/#{@player_level}")}>
+  <.live_component
+    module={GamificationWeb.PlayerLevelLive.FormComponent}
+    id={@player_level.id}
+    title={@page_title}
+    action={@live_action}
+    player_level={@player_level}
+    patch={~p"/players_levels/#{@player_level}"}
+  />
+</.modal>

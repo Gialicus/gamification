@@ -1,0 +1,28 @@
+<.header>
+  Active quest {@active_quest.id}
+  <:subtitle>This is a active_quest record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/active_quests/#{@active_quest}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit active_quest</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Started at">{@active_quest.started_at}</:item>
+  <:item title="Completed at">{@active_quest.completed_at}</:item>
+  <:item title="Status">{@active_quest.status}</:item>
+</.list>
+
+<.back navigate={~p"/active_quests"}>Back to active_quests</.back>
+
+<.modal :if={@live_action == :edit} id="active_quest-modal" show on_cancel={JS.patch(~p"/active_quests/#{@active_quest}")}>
+  <.live_component
+    module={GamificationWeb.ActiveQuestLive.FormComponent}
+    id={@active_quest.id}
+    title={@page_title}
+    action={@live_action}
+    active_quest={@active_quest}
+    patch={~p"/active_quests/#{@active_quest}"}
+  />
+</.modal>

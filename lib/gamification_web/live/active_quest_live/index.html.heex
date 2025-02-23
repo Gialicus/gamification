@@ -1,0 +1,43 @@
+<.header>
+  Listing Active quests
+  <:actions>
+    <.link patch={~p"/active_quests/new"}>
+      <.button>New Active quest</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="active_quests"
+  rows={@streams.active_quests}
+  row_click={fn {_id, active_quest} -> JS.navigate(~p"/active_quests/#{active_quest}") end}
+>
+  <:col :let={{_id, active_quest}} label="Started at">{active_quest.started_at}</:col>
+  <:col :let={{_id, active_quest}} label="Completed at">{active_quest.completed_at}</:col>
+  <:col :let={{_id, active_quest}} label="Status">{active_quest.status}</:col>
+  <:action :let={{_id, active_quest}}>
+    <div class="sr-only">
+      <.link navigate={~p"/active_quests/#{active_quest}"}>Show</.link>
+    </div>
+    <.link patch={~p"/active_quests/#{active_quest}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, active_quest}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: active_quest.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="active_quest-modal" show on_cancel={JS.patch(~p"/active_quests")}>
+  <.live_component
+    module={GamificationWeb.ActiveQuestLive.FormComponent}
+    id={@active_quest.id || :new}
+    title={@page_title}
+    action={@live_action}
+    active_quest={@active_quest}
+    patch={~p"/active_quests"}
+  />
+</.modal>

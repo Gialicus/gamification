@@ -1,0 +1,25 @@
+<.header>
+  Quest reward {@quest_reward.id}
+  <:subtitle>This is a quest_reward record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/quest_rewards/#{@quest_reward}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit quest_reward</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+</.list>
+
+<.back navigate={~p"/quest_rewards"}>Back to quest_rewards</.back>
+
+<.modal :if={@live_action == :edit} id="quest_reward-modal" show on_cancel={JS.patch(~p"/quest_rewards/#{@quest_reward}")}>
+  <.live_component
+    module={GamificationWeb.QuestRewardLive.FormComponent}
+    id={@quest_reward.id}
+    title={@page_title}
+    action={@live_action}
+    quest_reward={@quest_reward}
+    patch={~p"/quest_rewards/#{@quest_reward}"}
+  />
+</.modal>

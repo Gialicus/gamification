@@ -1,0 +1,43 @@
+<.header>
+  Listing Milestones
+  <:actions>
+    <.link patch={~p"/milestones/new"}>
+      <.button>New Milestone</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="milestones"
+  rows={@streams.milestones}
+  row_click={fn {_id, milestone} -> JS.navigate(~p"/milestones/#{milestone}") end}
+>
+  <:col :let={{_id, milestone}} label="Name">{milestone.name}</:col>
+  <:col :let={{_id, milestone}} label="Description">{milestone.description}</:col>
+  <:col :let={{_id, milestone}} label="Points rewarded">{milestone.points_rewarded}</:col>
+  <:action :let={{_id, milestone}}>
+    <div class="sr-only">
+      <.link navigate={~p"/milestones/#{milestone}"}>Show</.link>
+    </div>
+    <.link patch={~p"/milestones/#{milestone}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, milestone}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: milestone.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="milestone-modal" show on_cancel={JS.patch(~p"/milestones")}>
+  <.live_component
+    module={GamificationWeb.MilestoneLive.FormComponent}
+    id={@milestone.id || :new}
+    title={@page_title}
+    action={@live_action}
+    milestone={@milestone}
+    patch={~p"/milestones"}
+  />
+</.modal>

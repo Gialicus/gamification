@@ -1,0 +1,26 @@
+<.header>
+  Player achievement {@player_achievement.id}
+  <:subtitle>This is a player_achievement record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/player_achievements/#{@player_achievement}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit player_achievement</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Achieved at">{@player_achievement.achieved_at}</:item>
+</.list>
+
+<.back navigate={~p"/player_achievements"}>Back to player_achievements</.back>
+
+<.modal :if={@live_action == :edit} id="player_achievement-modal" show on_cancel={JS.patch(~p"/player_achievements/#{@player_achievement}")}>
+  <.live_component
+    module={GamificationWeb.PlayerAchievementLive.FormComponent}
+    id={@player_achievement.id}
+    title={@page_title}
+    action={@live_action}
+    player_achievement={@player_achievement}
+    patch={~p"/player_achievements/#{@player_achievement}"}
+  />
+</.modal>

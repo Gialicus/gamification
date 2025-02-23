@@ -1,0 +1,28 @@
+<.header>
+  Milestone {@milestone.id}
+  <:subtitle>This is a milestone record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/milestones/#{@milestone}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit milestone</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name">{@milestone.name}</:item>
+  <:item title="Description">{@milestone.description}</:item>
+  <:item title="Points rewarded">{@milestone.points_rewarded}</:item>
+</.list>
+
+<.back navigate={~p"/milestones"}>Back to milestones</.back>
+
+<.modal :if={@live_action == :edit} id="milestone-modal" show on_cancel={JS.patch(~p"/milestones/#{@milestone}")}>
+  <.live_component
+    module={GamificationWeb.MilestoneLive.FormComponent}
+    id={@milestone.id}
+    title={@page_title}
+    action={@live_action}
+    milestone={@milestone}
+    patch={~p"/milestones/#{@milestone}"}
+  />
+</.modal>
