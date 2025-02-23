@@ -7,6 +7,9 @@ defmodule Gamification.Rewards.Reward do
     field :description, :string
     field :points_cost, :integer
 
+    many_to_many :quests, Gamification.Quests.Quest,
+      join_through: Gamification.QuestsRewards.QuestReward
+
     timestamps(type: :utc_datetime)
   end
 

@@ -1,7 +1,7 @@
-defmodule Gamification.QuestRewardsFixtures do
+defmodule Gamification.QuestsRewardsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Gamification.QuestRewards` context.
+  entities via the `Gamification.QuestsRewards` context.
   """
 
   @doc """
@@ -11,9 +11,9 @@ defmodule Gamification.QuestRewardsFixtures do
     {:ok, quest_reward} =
       attrs
       |> Enum.into(%{
-
+        expire_at: ~U[2025-02-22 23:20:00Z]
       })
-      |> Gamification.QuestRewards.create_quest_reward()
+      |> Gamification.QuestsRewards.create_quest_reward()
 
     quest_reward
   end

@@ -6,6 +6,7 @@ defmodule Gamification.Repo.Migrations.CreatePlayers do
       add :name, :string
       add :email, :string
       add :score, :integer
+      add :level, :integer
 
       timestamps(type: :utc_datetime)
     end

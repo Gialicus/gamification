@@ -1,12 +1,11 @@
-defmodule Gamification.PlayerAchievements.PlayerAchievement do
+defmodule Gamification.PlayersAchievements.PlayerAchievement do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "player_achievements" do
+  schema "players_achievements" do
     field :achieved_at, :naive_datetime
-    field :player_id, :id
-    field :achievement_id, :id
-
+    belongs_to :player, Gamification.Players.Player
+    belongs_to :achievement, Gamification.Achievements.Achievement
     timestamps(type: :utc_datetime)
   end
 

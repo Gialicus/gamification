@@ -1,23 +1,23 @@
-defmodule Gamification.PlayerAchievements do
+defmodule Gamification.PlayersAchievements do
   @moduledoc """
-  The PlayerAchievements context.
+  The PlayersAchievements context.
   """
 
   import Ecto.Query, warn: false
   alias Gamification.Repo
 
-  alias Gamification.PlayerAchievements.PlayerAchievement
+  alias Gamification.PlayersAchievements.PlayerAchievement
 
   @doc """
-  Returns the list of player_achievements.
+  Returns the list of players_achievements.
 
   ## Examples
 
-      iex> list_player_achievements()
+      iex> list_players_achievements()
       [%PlayerAchievement{}, ...]
 
   """
-  def list_player_achievements do
+  def list_players_achievements do
     Repo.all(PlayerAchievement)
   end
 

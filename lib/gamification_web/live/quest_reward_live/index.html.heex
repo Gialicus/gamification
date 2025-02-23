@@ -1,22 +1,23 @@
 <.header>
-  Listing Quest rewards
+  Listing Quests rewards
   <:actions>
-    <.link patch={~p"/quest_rewards/new"}>
+    <.link patch={~p"/quests_rewards/new"}>
       <.button>New Quest reward</.button>
     </.link>
   </:actions>
 </.header>
 
 <.table
-  id="quest_rewards"
-  rows={@streams.quest_rewards}
-  row_click={fn {_id, quest_reward} -> JS.navigate(~p"/quest_rewards/#{quest_reward}") end}
+  id="quests_rewards"
+  rows={@streams.quests_rewards}
+  row_click={fn {_id, quest_reward} -> JS.navigate(~p"/quests_rewards/#{quest_reward}") end}
 >
+  <:col :let={{_id, quest_reward}} label="Expire at">{quest_reward.expire_at}</:col>
   <:action :let={{_id, quest_reward}}>
     <div class="sr-only">
-      <.link navigate={~p"/quest_rewards/#{quest_reward}"}>Show</.link>
+      <.link navigate={~p"/quests_rewards/#{quest_reward}"}>Show</.link>
     </div>
-    <.link patch={~p"/quest_rewards/#{quest_reward}/edit"}>Edit</.link>
+    <.link patch={~p"/quests_rewards/#{quest_reward}/edit"}>Edit</.link>
   </:action>
   <:action :let={{id, quest_reward}}>
     <.link
@@ -28,13 +29,13 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="quest_reward-modal" show on_cancel={JS.patch(~p"/quest_rewards")}>
+<.modal :if={@live_action in [:new, :edit]} id="quest_reward-modal" show on_cancel={JS.patch(~p"/quests_rewards")}>
   <.live_component
     module={GamificationWeb.QuestRewardLive.FormComponent}
     id={@quest_reward.id || :new}
     title={@page_title}
     action={@live_action}
     quest_reward={@quest_reward}
-    patch={~p"/quest_rewards"}
+    patch={~p"/quests_rewards"}
   />
 </.modal>

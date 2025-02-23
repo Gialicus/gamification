@@ -1,7 +1,7 @@
 defmodule GamificationWeb.QuestRewardLive.FormComponent do
   use GamificationWeb, :live_component
 
-  alias Gamification.QuestRewards
+  alias Gamification.QuestsRewards
 
   @impl true
   def render(assigns) do
@@ -19,7 +19,7 @@ defmodule GamificationWeb.QuestRewardLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-
+        <.input field={@form[:expire_at]} type="datetime-local" label="Expire at" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Quest reward</.button>
         </:actions>
@@ -34,13 +34,13 @@ defmodule GamificationWeb.QuestRewardLive.FormComponent do
      socket
      |> assign(assigns)
      |> assign_new(:form, fn ->
-       to_form(QuestRewards.change_quest_reward(quest_reward))
+       to_form(QuestsRewards.change_quest_reward(quest_reward))
      end)}
   end
 
   @impl true
   def handle_event("validate", %{"quest_reward" => quest_reward_params}, socket) do
-    changeset = QuestRewards.change_quest_reward(socket.assigns.quest_reward, quest_reward_params)
+    changeset = QuestsRewards.change_quest_reward(socket.assigns.quest_reward, quest_reward_params)
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 
@@ -49,7 +49,7 @@ defmodule GamificationWeb.QuestRewardLive.FormComponent do
   end
 
   defp save_quest_reward(socket, :edit, quest_reward_params) do
-    case QuestRewards.update_quest_reward(socket.assigns.quest_reward, quest_reward_params) do
+    case QuestsRewards.update_quest_reward(socket.assigns.quest_reward, quest_reward_params) do
       {:ok, quest_reward} ->
         notify_parent({:saved, quest_reward})
 
@@ -64,7 +64,7 @@ defmodule GamificationWeb.QuestRewardLive.FormComponent do
   end
 
   defp save_quest_reward(socket, :new, quest_reward_params) do
-    case QuestRewards.create_quest_reward(quest_reward_params) do
+    case QuestsRewards.create_quest_reward(quest_reward_params) do
       {:ok, quest_reward} ->
         notify_parent({:saved, quest_reward})
 

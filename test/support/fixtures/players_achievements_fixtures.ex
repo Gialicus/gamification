@@ -1,7 +1,7 @@
-defmodule Gamification.PlayerAchievementsFixtures do
+defmodule Gamification.PlayersAchievementsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Gamification.PlayerAchievements` context.
+  entities via the `Gamification.PlayersAchievements` context.
   """
 
   @doc """
@@ -11,9 +11,9 @@ defmodule Gamification.PlayerAchievementsFixtures do
     {:ok, player_achievement} =
       attrs
       |> Enum.into(%{
-        achieved_at: ~N[2025-02-22 22:04:00]
+        achieved_at: ~N[2025-02-22 22:44:00]
       })
-      |> Gamification.PlayerAchievements.create_player_achievement()
+      |> Gamification.PlayersAchievements.create_player_achievement()
 
     player_achievement
   end

@@ -1,23 +1,23 @@
-defmodule Gamification.QuestRewards do
+defmodule Gamification.QuestsRewards do
   @moduledoc """
-  The QuestRewards context.
+  The QuestsRewards context.
   """
 
   import Ecto.Query, warn: false
   alias Gamification.Repo
 
-  alias Gamification.QuestRewards.QuestReward
+  alias Gamification.QuestsRewards.QuestReward
 
   @doc """
-  Returns the list of quest_rewards.
+  Returns the list of quests_rewards.
 
   ## Examples
 
-      iex> list_quest_rewards()
+      iex> list_quests_rewards()
       [%QuestReward{}, ...]
 
   """
-  def list_quest_rewards do
+  def list_quests_rewards do
     Repo.all(QuestReward)
   end
 

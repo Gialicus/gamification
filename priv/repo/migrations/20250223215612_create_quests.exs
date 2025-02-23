@@ -6,7 +6,6 @@ defmodule Gamification.Repo.Migrations.CreateQuests do
       add(:name, :string)
       add(:description, :text)
       add(:points_rewarded, :integer)
-      add(:milestone_id, references(:milestones, on_delete: :nothing))
 
       timestamps(type: :utc_datetime)
     end

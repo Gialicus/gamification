@@ -1,7 +1,7 @@
 defmodule GamificationWeb.PlayerAchievementLive.Show do
   use GamificationWeb, :live_view
 
-  alias Gamification.PlayerAchievements
+  alias Gamification.PlayersAchievements
 
   @impl true
   def mount(_params, _session, socket) do
@@ -13,7 +13,7 @@ defmodule GamificationWeb.PlayerAchievementLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:player_achievement, PlayerAchievements.get_player_achievement!(id))}
+     |> assign(:player_achievement, PlayersAchievements.get_player_achievement!(id))}
   end
 
   defp page_title(:show), do: "Show Player achievement"

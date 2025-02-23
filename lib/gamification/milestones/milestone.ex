@@ -6,7 +6,7 @@ defmodule Gamification.Milestones.Milestone do
     field :name, :string
     field :description, :string
     field :points_rewarded, :integer
-
+    has_many :quests, Gamification.Quests.Quest
     timestamps(type: :utc_datetime)
   end
 

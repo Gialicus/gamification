@@ -1,7 +1,7 @@
 defmodule GamificationWeb.PlayerAchievementLive.FormComponent do
   use GamificationWeb, :live_component
 
-  alias Gamification.PlayerAchievements
+  alias Gamification.PlayersAchievements
 
   @impl true
   def render(assigns) do
@@ -34,13 +34,13 @@ defmodule GamificationWeb.PlayerAchievementLive.FormComponent do
      socket
      |> assign(assigns)
      |> assign_new(:form, fn ->
-       to_form(PlayerAchievements.change_player_achievement(player_achievement))
+       to_form(PlayersAchievements.change_player_achievement(player_achievement))
      end)}
   end
 
   @impl true
   def handle_event("validate", %{"player_achievement" => player_achievement_params}, socket) do
-    changeset = PlayerAchievements.change_player_achievement(socket.assigns.player_achievement, player_achievement_params)
+    changeset = PlayersAchievements.change_player_achievement(socket.assigns.player_achievement, player_achievement_params)
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 
@@ -49,7 +49,7 @@ defmodule GamificationWeb.PlayerAchievementLive.FormComponent do
   end
 
   defp save_player_achievement(socket, :edit, player_achievement_params) do
-    case PlayerAchievements.update_player_achievement(socket.assigns.player_achievement, player_achievement_params) do
+    case PlayersAchievements.update_player_achievement(socket.assigns.player_achievement, player_achievement_params) do
       {:ok, player_achievement} ->
         notify_parent({:saved, player_achievement})
 
@@ -64,7 +64,7 @@ defmodule GamificationWeb.PlayerAchievementLive.FormComponent do
   end
 
   defp save_player_achievement(socket, :new, player_achievement_params) do
-    case PlayerAchievements.create_player_achievement(player_achievement_params) do
+    case PlayersAchievements.create_player_achievement(player_achievement_params) do
       {:ok, player_achievement} ->
         notify_parent({:saved, player_achievement})
 

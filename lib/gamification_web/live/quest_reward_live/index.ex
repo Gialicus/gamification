@@ -1,12 +1,12 @@
 defmodule GamificationWeb.QuestRewardLive.Index do
   use GamificationWeb, :live_view
 
-  alias Gamification.QuestRewards
-  alias Gamification.QuestRewards.QuestReward
+  alias Gamification.QuestsRewards
+  alias Gamification.QuestsRewards.QuestReward
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :quest_rewards, QuestRewards.list_quest_rewards())}
+    {:ok, stream(socket, :quests_rewards, QuestsRewards.list_quests_rewards())}
   end
 
   @impl true
@@ -17,7 +17,7 @@ defmodule GamificationWeb.QuestRewardLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Quest reward")
-    |> assign(:quest_reward, QuestRewards.get_quest_reward!(id))
+    |> assign(:quest_reward, QuestsRewards.get_quest_reward!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -28,20 +28,20 @@ defmodule GamificationWeb.QuestRewardLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Quest rewards")
+    |> assign(:page_title, "Listing Quests rewards")
     |> assign(:quest_reward, nil)
   end
 
   @impl true
   def handle_info({GamificationWeb.QuestRewardLive.FormComponent, {:saved, quest_reward}}, socket) do
-    {:noreply, stream_insert(socket, :quest_rewards, quest_reward)}
+    {:noreply, stream_insert(socket, :quests_rewards, quest_reward)}
   end
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    quest_reward = QuestRewards.get_quest_reward!(id)
-    {:ok, _} = QuestRewards.delete_quest_reward(quest_reward)
+    quest_reward = QuestsRewards.get_quest_reward!(id)
+    {:ok, _} = QuestsRewards.delete_quest_reward(quest_reward)
 
-    {:noreply, stream_delete(socket, :quest_rewards, quest_reward)}
+    {:noreply, stream_delete(socket, :quests_rewards, quest_reward)}
   end
 end

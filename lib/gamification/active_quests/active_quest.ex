@@ -3,12 +3,11 @@ defmodule Gamification.ActiveQuests.ActiveQuest do
   import Ecto.Changeset
 
   schema "active_quests" do
-    field :status, :string
-    field :started_at, :naive_datetime
-    field :completed_at, :naive_datetime
-    field :player_id, :id
-    field :quest_id, :id
-
+    field(:status, :string)
+    field(:started_at, :naive_datetime)
+    field(:completed_at, :naive_datetime)
+    belongs_to :player, Gamification.Players.Player
+    belongs_to :quest, Gamification.Quests.Quest
     timestamps(type: :utc_datetime)
   end
 
